@@ -20,7 +20,7 @@ app.use(cookieParser());
 
 const PORT = process.env.PORT;
 
-//ine test route 
+// test route 
 app.get("/",(req, res)=>{
   res.send("Hello from backend");
 });
