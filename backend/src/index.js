@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
+import connectDB from"./utils/db.js";
+
 dotenv.config();
 
 const app = express();
@@ -22,6 +24,8 @@ const PORT = process.env.PORT;
 app.get("/",(req, res)=>{
   res.send("Hello from backend");
 });
+
+connectDB();
 
 app.listen(PORT, ()=>{
   console.log(`App is running on port number ${PORT}`);
