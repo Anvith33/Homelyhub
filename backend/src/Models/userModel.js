@@ -67,3 +67,17 @@ const userSchema = new mongoose.Schema(
   },
   {timestamps:true}
 )
+//settings to pass in response from server
+userSchema.set("toJSON",{
+  transform:function(doc,ret){
+    delete ret.password;
+    delete ret.passwordConfirm;
+    delete ret.passwordResetToken;
+    delete ret.passwordResetExpires;
+    delete ret.__v;
+    return ret;
+  }
+})
+
+// password logic
+
