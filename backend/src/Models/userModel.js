@@ -88,4 +88,19 @@ userSchema.pre("save", async function(next){
   next();
 })
 
+//logic to check if password is correct
+userSchema.methods.correctPassword = async function(candidatePassword, userPassword){
+  return await bcrypt.compare(candidatePassword,userPassword);
+}
+
+//token logic to check if password is changed after token is issued
+userSchema.methods.changedPasswordAfter = function (JWTTimestamp){
+  if(this.passwordChangedAt){
+    const changedTimestamp = parseInt(this.passwordChangedAt.getTime()/1000,10);
+    return JWTTimestamp < changedTimestamp;
+  }
+  return false;
+}
+
+//forgot password Logic
 
