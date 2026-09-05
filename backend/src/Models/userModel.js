@@ -50,6 +50,20 @@ const userSchema = new mongoose.Schema(
     avatar:{
       url:{type:String},
       public_id:{type:String}
-    }
-  }
+    },
+    passwordChangedAt:{
+      type:Date
+    },
+    passwordResetToken:{
+      type:String,
+      select:false,
+      index:true
+    },
+    passwordResetExpires:{
+      type:Date,
+      select:false,
+    },
+  
+  },
+  {timestamps:true}
 )
