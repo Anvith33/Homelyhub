@@ -11,6 +11,30 @@ const userSchema = new mongoose.Schema(
       required:[true, "please provide your name"],
       trim:true,
       maxlength:[40, "name should not be more than 40 characters"]
-    }
+    },
+    email:{
+      type:String,
+      required:[true, "please provide your email"],
+      unique:true,
+      lowercase:true,
+      trim:true,
+      validate:[validator.isEmail, "please provide a valid email"]
+    },
+    password:{
+      type:String,
+      required:[true,"please enter your password"],
+      minlength:[8,"password should be atleast 8 characters"],
+      select:false
+    },
+    passwordConfirm:{
+      type:String,
+      required:[true,"please confirm your password"],
+      validate:{
+        validator:function(el){
+          return el === this.password;
+        },
+        message:"passwords are not the same"
+      }
+      }
   }
 )
