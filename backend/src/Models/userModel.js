@@ -35,6 +35,21 @@ const userSchema = new mongoose.Schema(
         },
         message:"passwords are not the same"
       }
-      }
+      },
+    phoneNumber:{
+      type:String,
+      required:[true, "please provide your phone number"],
+      unique:true,
+      trim:true
+    },
+    role:{
+      type:String,
+      enum:["user","admin"],
+      default:"user"
+    },
+    avatar:{
+      url:{type:String},
+      public_id:{type:String}
+    }
   }
 )
