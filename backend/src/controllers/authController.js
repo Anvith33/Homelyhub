@@ -17,8 +17,13 @@ try{
     avatar: {url:req.body.avatar || defaultAvatarUrl(req.body.name)}
   })
 
+  createSendToken(newUser, 201, res);
+
 }
 catch(error){
 
+  const duplicateField = Object.keys(error.keyPattern || {}[0]);
+  const message = duplicateField ? 'An account with that ${duplicateField} already exists' : error.message;
+  res.status(400).json({message})
 }
 }
