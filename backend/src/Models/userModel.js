@@ -80,13 +80,12 @@ userSchema.set("toJSON",{
 })
 
 // password logic using hashing
-userSchema.pre("save", async function(next){
-  if(!this.isModified("password")) return next();
+userSchema.pre("save", async function(){
+  if(!this.isModified("password")) return;
 
   this.password = await bcrypt.hash(this.password, 12);
   this.passwordConfirm = undefined;
-  next();
-})
+});
 
 //logic to check if password is correct
 userSchema.methods.correctPassword = async function(candidatePassword, userPassword){
@@ -110,5 +109,5 @@ userSchema.methods.createPasswordResetToken = function(){
   return resetToken;
 }
 
-const User =mongoose.model("User", userschema);
+const User = mongoose.model("User", userSchema);
 export {User};
