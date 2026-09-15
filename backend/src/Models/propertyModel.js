@@ -78,10 +78,22 @@ const propertySchema = new mongoose.Schema({
   },
 
   currentBookings:[
-
-
-
-
+    {
+      bookingId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Booking"
+      },
+      fromDate:{
+        type:Date
+      },
+      toDate:{
+        type:Date
+      },
+      userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User"
+      }
+    }
   ],
   userId:{
     type: mongoose.Schema.Types.ObjectId,
