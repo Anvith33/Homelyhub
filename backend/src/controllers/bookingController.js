@@ -93,3 +93,25 @@ const getUserBookings=async(req,res)=>{
     })
   }
 }
+
+//get particular one booking details
+const getBookingDetails=async(req,res)=>{
+  try{
+    const bookings =await Booking.findById(req.params.bookingId)
+    res.status(200).json({
+      status:"success",
+      data:{
+        bookings
+      }
+    })
+      
+  }
+  catch(error){
+     res.status(401).json({
+    status:"failed",
+    message:error.message
+  })
+}
+}
+
+export {getBookingDetails,getUserBookings,createOrder,verifyPayment}
