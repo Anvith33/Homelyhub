@@ -72,3 +72,24 @@ const verifyPayment = async(req,res)=>{
     })
   }
 }
+
+//get my booking
+const getUserBookings=async(req,res)=>{
+  try
+  {
+    const bookings=await Booking.find({use:req.user._id});
+    res.status(200).json({
+      status:"success",
+      data:{
+        bookings
+      }
+    })
+  }
+  catch(error)
+  {
+    res.status(401).json({
+    status:"failed",
+    message:error.message
+    })
+  }
+}
