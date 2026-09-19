@@ -77,7 +77,7 @@ const verifyPayment = async(req,res)=>{
 const getUserBookings=async(req,res)=>{
   try
   {
-    const bookings=await Booking.find({use:req.user._id});
+    const bookings=await Booking.find({user:req.user._id});
     res.status(200).json({
       status:"success",
       data:{

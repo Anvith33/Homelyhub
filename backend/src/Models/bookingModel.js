@@ -59,7 +59,7 @@ bookingSchema.pre(/^find/, function(){
   this.populate("user");
     
   this.populate({
-  path:property,
+  path:"property",
   select: "maximumGuest images propertyName address"
   });
 
