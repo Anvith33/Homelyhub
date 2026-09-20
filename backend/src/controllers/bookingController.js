@@ -93,7 +93,6 @@ const getUserBookings=async(req,res)=>{
     })
   }
 }
-
 //get particular one booking details
 const getBookingDetails=async(req,res)=>{
   try{
