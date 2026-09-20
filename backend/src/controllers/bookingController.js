@@ -99,11 +99,11 @@ const getBookingDetails=async(req,res)=>{
     const bookings =await Booking.findById(req.params.bookingId)
     res.status(200).json({
       status:"success",
-      data:{
+      data:
+      {
         bookings
       }
-    })
-      
+    })    
   }
   catch(error){
      res.status(401).json({
