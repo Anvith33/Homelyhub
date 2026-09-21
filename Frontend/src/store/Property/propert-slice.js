@@ -21,7 +21,22 @@ const propertySlice =createSlice({
       state.loading=true;
     },
     getProperties(state,action){
-      state.properties= action.payload.data
-    }
+      state.properties= action.payload.data;
+      state.totalProperties=action.payload.all_properties;
+      state.loading=false;
+    },
+    updateSearchParams:(state,action=>{
+      state.seachParams=object.keys(action.payload).length  ===0>{}:{
+        ...state.seachParams,
+        ...action.payload
+      }
+    },
+  getErrors(state,action){
+    state.error =action.payload
+  }
+
   }
 })
+
+export const propertyAction = propertySlice.actions
+export default propertySlice;
