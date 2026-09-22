@@ -25,8 +25,8 @@ const propertySlice =createSlice({
       state.totalProperties=action.payload.all_properties;
       state.loading=false;
     },
-    updateSearchParams:(state,action=>{
-      state.seachParams=object.keys(action.payload).length  ===0>{}:{
+    updateSearchParams:(state,action)=>{
+      state.seachParams=object.keys(action.payload).length  ===0?{}:{
         ...state.seachParams,
         ...action.payload
       }
