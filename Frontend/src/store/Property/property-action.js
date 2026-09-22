@@ -1,6 +1,6 @@
 import propertySlice from "./propert-slice";
 import { propertyAction } from "./propert-slice";
-import {axions} from "../../utils/axios"
+import {axios} from "../../utils/axios"
 
 //get all properties
 //1. start api req
