@@ -1,6 +1,5 @@
-import propertySlice from "./propert-slice";
 import { propertyAction } from "./propert-slice";
-import {axiosInstance} from "../../utils/axios"
+import { axiosInstance } from "../../utils/axios";
 
 //get all properties
 //1. start api req
@@ -14,30 +13,29 @@ import {axiosInstance} from "../../utils/axios"
 //dispatch means send to redux
 //getstate means get from redux
 
-export const getAllProperties =()=> async(dispatchEvent, getState)=>{
-  try{
+export const getAllProperties = () => async (dispatch, getState) => {
+  try {
     console.log("API call started");
 
-    dispatchEvent(propertyAction.getRequest())
+    dispatch(propertyAction.getRequest());
 
-    const {SearchParams} = getState().properties
+    const { searchParams } = getState().properties;
 
-    console.log(SearchParams)
+    console.log(searchParams);
 
-    const response = await axiosInstance.get('/v1/rent/listing',{
-      params:{...SearchParams}
-    })
+    const response = await axiosInstance.get("/v1/rent/listing", {
+      params: { ...searchParams },
+    });
 
-    if(!response){
-      throw new Error("could not fetch any properties")
+    if (!response) {
+      throw new Error("could not fetch any properties");
     }
-    const {data}=response;
+    const { data } = response;
     console.log(data);
 
-    dispatch(propertyAction.getProperties(data))
+    dispatch(propertyAction.getProperties(data));
 
-  }
-  catch(error){
-    dispatch(propertyAction.getErrors(error.message))
+  } catch (error) {
+    dispatch(propertyAction.getErrors(error.message));
   }
 }

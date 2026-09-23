@@ -3,7 +3,7 @@ import propertySlice from "./Property/propert-slice";
 
 const store = configureStore({
   reducer:{
-    propertiees: propertySlice.reducer
+    properties: propertySlice.reducer
   }
 })
 export default store;
