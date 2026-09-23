@@ -14,20 +14,13 @@ const PropertyListing = () => {
   const { id } = useParams();
   const dispatch = useDispatch()
 
-  const {loading, propertydetails} = useSelector(
-    (state) => state.propertydetails
-  )
+  const { loading, propertydetails } = useSelector(
+    (state) => state.propertyDetails
+  );
 
   useEffect(() => {
-    // TODO: fetch the property details for `id` here and set them below.
-    // Statically we just look the property up in the placeholder data.
-    const found = STATIC_PROPERTIES.find((property) => property._id === id);
-    setPropertyDetails(
-      found
-        ? { ...STATIC_PROPERTY_DETAILS, ...found }
-        : STATIC_PROPERTY_DETAILS
-    );
-  }, [id]);
+    dispatch(getPropertyDetails(id))
+  },[dispatch,id]);
 
   if (loading || !propertydetails)
     return (
