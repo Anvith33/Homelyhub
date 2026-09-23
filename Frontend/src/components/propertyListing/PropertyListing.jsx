@@ -7,20 +7,16 @@ import PropertyAmenities from "./PropertyAmenities";
 import PropertMapInfo from "./PropertyMapInfo";
 import { useParams } from "react-router-dom";
 import LoadingSpinner from "../LoadingSpinner";
-import {
-  STATIC_PROPERTIES,
-  STATIC_PROPERTY_DETAILS,
-} from "../../data/staticData";
+import {useDispatch, useSelector} from "react-redux"
+import { getPropertyDetails } from "../../store/PropertDetails/propertyDetails-action";
 
 const PropertyListing = () => {
   const { id } = useParams();
+  const dispatch = useDispatch()
 
-  // STATIC: was `useSelector((state) => state.propertydetails)`.
-  // TODO: replace with your own fetch logic.
-  const [loading] = useState(false);
-  const [propertydetails, setPropertyDetails] = useState(
-    STATIC_PROPERTY_DETAILS
-  );
+  const {loading, propertydetails} = useSelector(
+    (state) => state.propertydetails
+  )
 
   useEffect(() => {
     // TODO: fetch the property details for `id` here and set them below.
