@@ -1,4 +1,4 @@
-import { userActions } from "./user-slice.js";
+import { userActions } from "./user-slice";
 import {axiosInstance} from "../../utils/axios";
 
 //signup
@@ -29,9 +29,65 @@ export const getlogin=(user) => async(dispatch) => {
 
 export const currentUser =() =>async(dispatch) =>{
   try{
-    dispatch(userActions.get)
+    dispatch(userActions.getCurrentRequest());
+    const {data} = await axiosInstance.get("/v1/rent/user/me")
+    dispatch(userActions.getCurrentUser(data.user))
   }
-  catch(error){
+  catch{
+    dispatch(userActions.getLogout(null));
 
   }
 }
+export const updateUser = (updateUser)=>async(dispatch)=>{
+  try{
+    dispatch(userActions.getUpdateUserRequest());
+    const response =await axiosInstance.patch("/v1/reent/user/updateMe",updateUser);
+    console.log(response)
+    const {data} = await axiosInstance.get("/v1/rent/user/me")
+    dispatch(userActions.getCurrentRequest(data.user));
+  }
+  catch(error){
+    dispatch(userActions.getError(error.response.data.message))
+    }
+
+  }
+  export const forgotPassword=(email)=> async(dispatch)=>{
+  try{
+    await axiosInstance.post("v1/rent/user/forgotPassword",{email})
+
+}catch(error){
+  dispatch(userActions.getError(error.response.data.message))
+}
+}
+
+export const resetPassword = (repassword, token) =>async(dispatch)=>{
+  try{
+    await axiosInstance.patch(`/v1/rent/user/resetpassword/${token}`,repassword)
+  }
+  catch(error){
+      dispatch(userActions.getError(error.response.data.message))
+
+  }
+}
+
+export const updatePassword =(passwords) => async (dispatch) =>{
+  try{
+    dispatch(userActions.getPasswordRequest());
+    await axiosInstance.patch("/v1/rent/user/updateMyPassword",passwords)
+    dispatch(userActions.getPasswordSuccess)
+  }
+  catch(error){
+      dispatch(userActions.getError(error.response.data.message))
+
+  }
+}
+
+export const logout = ()=> async(dispatch)=>{
+  try{
+    await axiosInstance.get("/v1/rent/user/logout")
+  } 
+  catch(error){
+      dispatch(userActions.getError(error.response.data.message))
+
+  }
+};
