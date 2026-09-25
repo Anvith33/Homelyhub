@@ -25,7 +25,10 @@ import UpdatePassword from "./components/user/UpdatePassword";
 import Payment from "./components/payment/Payment";
 import NotFound from "./components/NotFound";
 import AiTripPlanner from "./components/aiTripPlanner/AiTripPlanner";
-import { STATIC_USER } from "./data/staticData";
+
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
+import { userActions } from "./store/User/user-slice";
 
 function App() {
   // STATIC: was `useSelector((state) => state.user)`.
