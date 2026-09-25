@@ -85,6 +85,7 @@ export const updatePassword =(passwords) => async (dispatch) =>{
 export const logout = ()=> async(dispatch)=>{
   try{
     await axiosInstance.get("/v1/rent/user/logout")
+    dispatch(userActions.getLogout(null))
   } 
   catch(error){
       dispatch(userActions.getError(error.response.data.message))
