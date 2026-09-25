@@ -40,7 +40,9 @@ function App() {
     if(errors){
       dispatch(userActions.clearErrors())
     }
-  },[errors, dispatch]);
+  },
+  [errors, dispatch]);
+
 
   useEffect(()=>{
     dispatch(currentUser());
