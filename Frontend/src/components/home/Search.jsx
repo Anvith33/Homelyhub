@@ -3,15 +3,23 @@ import { DatePicker, Space } from "antd";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../css/Home.css";
 
+import { useDispatch } from "react-redux";
+import { propertyAction } from "../../store/Property/property-slice";
+import { getAllProperties } from "../../store/Property/property-action";
+
 const Search = () => {
   const { RangePicker } = DatePicker;
   const [keyword, setKeyword] = useState({});
   const [value, setValue] = useState([]);
 
+  const dispatch = useDispatch();
+
   function searchHandler(e) {
     e.preventDefault();
     // TODO: add your search logic here. `keyword` holds
     // { city, guests, dateIn, dateOut }.
+    dispatch(propertyAction.updateSearchParams(keyword));
+    dispatch(getAllProperties());
     setKeyword({
       city: "",
       guests: "",

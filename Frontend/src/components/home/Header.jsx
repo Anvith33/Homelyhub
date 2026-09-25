@@ -1,29 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import Search from "./Search";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Filter from "./Filter";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../store/User/user-action";
 import toast from "react-hot-toast";
+import { propertyAction } from "../../store/Property/property-slice";
+import { getAllProperties } from "../../store/Property/property-action";
 import "../../css/AiTripPlanner.css";
-import { STATIC_USER, STATIC_IS_AUTHENTICATED } from "../../data/staticData";
 
 const Header = () => {
-  // STATIC: was `useSelector((state) => state.user)`.
-  // TODO: replace with your own auth logic.
-  const [isAuthenticated] = useState(STATIC_IS_AUTHENTICATED);
-  const [user] = useState(STATIC_USER);
-
+  const { isAuthenticated, user } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
   const logoutUser = () => {
-    // TODO: add your logout logic here.
+    dispatch(logout());
     toast.success("User has loggedout successfully");
     navigate("/");
   };
 
   const refreshFunction = () => {
-    // TODO: add your "reset filters + reload properties" logic here.
+    dispatch(propertyAction.updateSearchParams({}));
+    dispatch(getAllProperties());
   };
 
   return (
