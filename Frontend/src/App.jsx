@@ -33,7 +33,18 @@ import { currentUser } from "./store/User/user-action";
 
 function App() {
 
-  
+  const dispatch = useDispatch();
+  const {errors, user} =useSelector((state)=>state.user);
+
+  useEffect(()=>{
+    if(errors){
+      dispatch(userActions.clearErrors())
+    }
+  },[errors, dispatch]);
+
+  useEffect(()=>{
+    dispatch(currentUser());
+  },[dispatch]);
 
   return (
     <div className="App">
