@@ -29,14 +29,11 @@ import AiTripPlanner from "./components/aiTripPlanner/AiTripPlanner";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import { userActions } from "./store/User/user-slice";
+import { currentUser } from "./store/User/user-action";
 
 function App() {
-  // STATIC: was `useSelector((state) => state.user)`.
-  // TODO: replace with your own auth logic (context / API / state manager).
-  const [user] = useState(STATIC_USER);
 
-  // TODO: fetch the logged in user on app load and set it above.
-  // useEffect(() => { ... }, []);
+  
 
   return (
     <div className="App">
