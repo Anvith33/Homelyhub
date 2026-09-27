@@ -3,24 +3,27 @@ import "../../css/MyBookings.css";
 import ProgressSteps from "../ProgressSteps";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../LoadingSpinner";
-import { STATIC_BOOKINGS } from "../../data/staticData";
+
+import {useDispatch, useSelector} from "react-redux";
+import { fetchBookingDetails, fetchUserBookings } from "../../store/Booking/booking-action";
 
 const MyBookings = () => {
   const navigate = useNavigate();
 
-  // STATIC: was `useSelector((state) => state.booking)`.
-  // TODO: replace with your own bookings fetching logic.
-  const [bookings] = useState(STATIC_BOOKINGS);
-  const [loading] = useState(false);
+  const dispatch =useDispatch();
+  const{bookings, loading} = useSelector((state)=>state.booking);
+
 
   useEffect(() => {
-    // TODO: fetch the user bookings here and set them above.
+    //  fetch the user bookings here and set them above.
+    dispatch(fetchUserBookings())
   }, []);
 
   console.log(bookings);
 
   const handleBookingClick = (bookingId) => {
     // TODO: fetch this booking's details here if you need to.
+    dispatch(fetchBookingDetails(bookingId))
     navigate(`/user/myBookings/${bookingId}`);
   };
 

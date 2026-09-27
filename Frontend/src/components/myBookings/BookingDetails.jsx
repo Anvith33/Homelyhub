@@ -3,26 +3,22 @@ import "../../css/BookingDetails.css";
 import PropertyImg from "../propertyListing/PropertyImg";
 import { useParams } from "react-router-dom";
 import LoadingSpinner from "../LoadingSpinner";
-import {
-  STATIC_BOOKINGS,
-  STATIC_BOOKING_DETAILS,
-} from "../../data/staticData";
+
+import { fetchBookingDetails } from "../../store/Booking/booking-action";
+import { useDispatch, useSelector } from "react-redux";
 
 const BookingDetails = () => {
   const { bookingId } = useParams();
-
+  const dispatch = useDispatch();
   // STATIC: was `useSelector((state) => state.booking)`.
   // TODO: replace with your own booking details fetching logic.
-  const [bookingDetails, setBookingDetails] = useState(STATIC_BOOKING_DETAILS);
+  const {bookingDetails}=useSelector ((state)=> state.booking);
 
   useEffect(() => {
     // TODO: fetch the booking details for `bookingId` here and set them below.
     // Statically we just look the booking up in the placeholder data.
-    const found = STATIC_BOOKINGS.find(
-      (booking) => booking._id === bookingId
-    );
-    setBookingDetails(found || STATIC_BOOKING_DETAILS);
-  }, [bookingId]);
+    dispatch(fetchBookingDetails(bookingId))
+  },[dispatch,bookingId]); 
 
   console.log(bookingDetails);
 
