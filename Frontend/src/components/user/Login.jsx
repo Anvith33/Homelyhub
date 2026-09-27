@@ -3,23 +3,31 @@ import { Link, useNavigate } from "react-router-dom";
 import "../../css/Login.css";
 import toast from "react-hot-toast";
 import LoadingSpinner from "../LoadingSpinner";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getLogin } from "../../store/User/user-action";
+import { userActions } from "../../store/User/user-slice";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  // STATIC: was `useSelector((state) => state.user)`.
-  // TODO: replace with your own auth logic.
-  const [loading] = useState(false);
-
-  const submitHandler = (e) => {
+  const dispatch = useDispatch();
+  const { isAuthenticated, errors, loading} = useSelector((state)=>state.user)
+  const submitHandler =(e)=>{
     e.preventDefault();
-    // TODO: add your login logic here.
-    console.log({ email, password });
-    toast.success("User has logged Successfully");
-    navigate("/");
-  };
+    dispatch(getLogin({email,password}));
+  }
+
+   useEffect(()=>{
+    if(errors && errors.length>0){
+      toast.error(error);
+      dispatch(userActions.clearErrors())
+    } else if (isAuthenticated){
+      navigate("/");
+      toast.success("user logged in successfully")
+
+    }
+  },[isAuthenticated,errors,navigate])
 
   return (
     <Fragment>
