@@ -2,7 +2,7 @@ import { axiosInstance } from "../../utils/axios";
 import { setBookingDetails, setBookings } from "./booking-slice";
 
 //fetch booking details
-export const fetchBookingDetails =(bookingId) => async(dispatch)=>(dispatch)=>{
+export const fetchBookingDetails =(bookingId) => async(dispatch)=>{
   try{
     const response = await axiosInstance.get(`/v1/rent/user/booking/${bookingId}`)
     dispatch(setBookingDetails(response.data.data));
