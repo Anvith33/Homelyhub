@@ -15,7 +15,7 @@ const initialState = {
   loading:false
 }
 
-const bookinSlice = createSlice({
+const bookingSlice = createSlice({
   name:"booking",
   initialState,
   reducers:{
@@ -35,5 +35,5 @@ const bookinSlice = createSlice({
   }
 })
 
-export const {setBookings, addBooking, setBookingDetails} = bookinSlice.actions;
-export default bookinSlice;
+export const {setBookings, addBooking, setBookingDetails} = bookingSlice.actions;
+export default bookingSlice;
