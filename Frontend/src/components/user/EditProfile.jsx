@@ -1,19 +1,18 @@
 import React, { Fragment, useEffect, useState } from "react";
 import "../../css/Profile.css";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUser } from "../../store/User/user-action";
 import { useForm } from "@tanstack/react-form";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { STATIC_USER } from "../../data/staticData";
+import { userActions } from "../../store/User/user-slice";
 
 const EditProfile = () => {
-  // STATIC: was `useSelector((state) => state.user)`.
-  // TODO: replace with your own user fetching logic.
-  const [user] = useState(STATIC_USER);
-  const [loading] = useState(false);
-
+  const { user, errors, loading } = useSelector((state) => state.user);
   const [avatarPreview, setAvatarPreview] = useState(
     user.avatar.url || "https://i.pravatar.cc/150?img=3"
   );
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const originalUserData = {
@@ -57,14 +56,17 @@ const EditProfile = () => {
         return;
       }
       console.log(updatedFields);
-      // TODO: add your "update user" logic here.
+      dispatch(updateUser(updatedFields));
       navigate("/profile");
       toast.success("Profile Updated");
     },
   });
 
   useEffect(() => {
-    if (user) {
+    if (errors && errors.length > 0) {
+      toast.error(errors);
+      dispatch(userActions.clearErrors());
+    } else if (user) {
       form.setFieldValue("name", user.name);
       form.setFieldValue("phoneNumber", user.phoneNumber);
       form.setFieldValue(

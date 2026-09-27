@@ -1,9 +1,12 @@
 import React from "react";
 import { useForm } from "@tanstack/react-form";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { resetPassword } from "../../store/User/user-action";
 import toast from "react-hot-toast";
 
 const ResetPassword = () => {
+  const dispatch = useDispatch();
   const { token } = useParams();
   const navigate = useNavigate();
   const form = useForm({
@@ -12,8 +15,8 @@ const ResetPassword = () => {
       passwordConfirm: "",
     },
     onSubmit: ({ value }) => {
-      console.log(value, token);
-      // TODO: add your "reset password" logic here (uses `token` from the url).
+      console.log(value);
+      dispatch(resetPassword(value, token));
       toast.success("Password has been changed successfully");
       navigate("/login");
     },

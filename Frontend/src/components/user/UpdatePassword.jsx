@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { updatePassword } from "../../store/User/user-action";
 import toast from "react-hot-toast";
+import { userActions } from "../../store/User/user-slice";
 
 const UpdatePassword = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [passwordCurrent, setPasswordCurrent] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const { errors, success } = useSelector((state) => state.user);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -16,11 +21,20 @@ const UpdatePassword = () => {
     } else {
       console.log({ passwordCurrent, password, passwordConfirm });
 
-      // TODO: add your "update password" logic here.
-      toast.success("Password update successfully");
-      navigate("/profile");
+      dispatch(updatePassword({ passwordCurrent, password, passwordConfirm }));
     }
   };
+
+  useEffect(() => {
+    if (errors) {
+      toast.error(errors);
+      dispatch(userActions.clearErrors());
+    } else if (success) {
+      toast.success("Password update successfully");
+      navigate("/profile");
+      dispatch(userActions.getPasswordSuccess(false));
+    }
+  }, [errors, dispatch, navigate, success]);
 
   return (
     <>

@@ -1,19 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../../css/ForgetPassword.css";
-import { useForm } from "@tanstack/react-form";
+import { Field, useForm } from "@tanstack/react-form";
+import { useDispatch, useSelector } from "react-redux";
+import { forgotPassword } from "../../store/User/user-action";
 import toast from "react-hot-toast";
 
 const ForgetPassword = () => {
+  const { errors } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const form = useForm({
     defaultValues: {
       email: "",
     },
     onSubmit: ({ value }) => {
       console.log(value);
-      // TODO: add your "forgot password" logic here.
+      dispatch(forgotPassword(value.email));
       toast.success("Email Sent! Please Check your Email");
     },
   });
+
+  useEffect(() => {
+    if (errors) {
+      toast.error(errors);
+    }
+  }, [errors]);
 
   return (
     <>

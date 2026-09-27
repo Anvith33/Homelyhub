@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import React, { Fragment } from "react";
 import ProgressSteps from "../ProgressSteps";
 import { Link } from "react-router-dom";
 import "../../css/Profile.css";
+import { useSelector } from "react-redux";
 import LoadingSpinner from "../LoadingSpinner";
 import moment from "moment";
-import { STATIC_USER } from "../../data/staticData";
 
 const Profile = () => {
-  // STATIC: was `useSelector((state) => state.user)`.
-  // TODO: replace with your own user fetching logic.
-  const [user] = useState(STATIC_USER);
-  const [loading] = useState(false);
+  
+  const { user, loading } = useSelector((state) => state.user);
 
   return (
     <>
