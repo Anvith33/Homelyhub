@@ -30,6 +30,7 @@ const planTrip = async (trip) => {
 - Number of People: ${trip.people}
 - Interests: ${trip.interests.join(", ")}`;
 
+//calling GROQ
   const completion = await groq.chat.completions.create({
     model: "openai/gpt-oss-120b",
     max_tokens: 2000,
