@@ -2,7 +2,7 @@ import { axiosInstance } from "../utils/axios";
 
 export const getAiDescription = async (values) => {
   const { data } = await axiosInstance.post(
-    "/api/v1/rent/user/generateDescription",
+    "/v1/rent/user/generateDescription",
     {
       propertyName: values.name,
       extraInfo: values.extraInfo,

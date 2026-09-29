@@ -7,6 +7,7 @@
 
 import {Property} from "../Models/propertyModel.js"
 import { planTrip } from "../ai/tripPlanner"
+import { generateDescription } from "../ai/generateDescription.js"
 
 const cleanCity=(text) => text.toLoweCase().replaceAll(" ","")
 
@@ -56,4 +57,16 @@ const createtripPlan=async(req, res) =>{
   }
 }
 
-export {createtripPlan};
+const writeDescription = async(req,res)=>{
+  try{
+  const description = await generateDescription(req.body);
+  res.status(200).jsom({status:"success", data:{description}})
+  }catch(error){
+     res.status(500).json({
+    status:"fail",
+    message:"Could not generate a description"
+    })
+  }
+}
+
+export {createtripPlan, writeDescription};
