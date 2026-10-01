@@ -1,4 +1,4 @@
-import { propertyAction } from "./propert-slice";
+import { propertyAction } from "./property-slice";
 import { axiosInstance } from "../../utils/axios";
 
 //get all properties
