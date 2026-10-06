@@ -105,14 +105,14 @@ const propertySchema = new mongoose.Schema({
   checkOutTime:{type:String, default:"11:00 AM"}
 })
 
-propertySchema.pre("save", function(next){
+propertySchema.pre("save", function(){
   this.slug= slugify(this.propertyName,{lower:true});
-  next();
+  
 })
 
-propertySchema.pre("save",function(next){
+propertySchema.pre("save",function(){
   this.address.city = this.address.city.toLowerCase().replaceAll(" ","");
-  next();
+  
 })
 
 //const Property = mongoose.model("Property", propertySchema);
