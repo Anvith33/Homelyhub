@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "../../css/Accomodation.css";
 import ProgressSteps from "../ProgressSteps";
 import MyAccomodation from "./MyAccomodation";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllAccomodation } from "../../store/Accomodation/Accomodation-action";
 import LoadingSpinner from "../LoadingSpinner";
-import { STATIC_ACCOMODATION } from "../../data/staticData";
 
 const Accomodation = () => {
-  // STATIC: was `useSelector((state) => state.accomodation)`.
-  // TODO: replace with your own accomodation fetching logic.
-  const [accomodation] = useState(STATIC_ACCOMODATION);
-  const [loading] = useState(false);
+  const dispatch = useDispatch();
+
+  const { accomodation, loading } = useSelector((state) => state.accomodation);
 
   useEffect(() => {
-    // TODO: fetch the user's accomodations here and set them above.
-  }, []);
+    dispatch(getAllAccomodation());
+  }, [dispatch]);
 
   return (
     <>

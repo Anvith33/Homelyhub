@@ -51,7 +51,7 @@ export const AddressField = ({ form }) => {
               type="number"
               placeholder="Pincode"
               required
-              value={field.state.value}
+              value={field.state.value || ""}
               onChange={(e) => field.handleChange(e.target.value)}
             />
           )}

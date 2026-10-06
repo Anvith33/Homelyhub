@@ -4,6 +4,11 @@ import { getAiDescription } from "../../ai/aiDescription";
 import { useForm } from "@tanstack/react-form";
 import { AddressField } from "./AddressField";
 import AmenitiesField from "./AmenitiesField";
+import {
+  createAccomodation,
+  getAllAccomodation,
+} from "../../store/Accomodation/Accomodation-action";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -19,11 +24,9 @@ const Section = ({ icon, title, hint, children }) => (
 );
 
 const AccomodationForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // STATIC: was `useSelector((state) => state.accomodation)`.
-  // TODO: replace with your own create-accomodation logic.
-  const [loading] = useState(false);
+  const { loading } = useSelector((state) => state.accomodation);
   const [aiLoading, setAiLoading] = useState(false);
 
   const form = useForm({
@@ -35,39 +38,53 @@ const AccomodationForm = () => {
       extraInfo: undefined,
       images: [],
       amenities: [],
-      address: {},
+     address: {
+  area: "",
+  city: "",
+  state: "",
+  pincode: "",
+},
       checkIn: undefined,
       checkOut: undefined,
       maximumGuest: 0,
       price: "",
     },
-    onSubmit: async ({ value }) => {
-      try {
-        console.log(value);
-        // TODO: add your "create accomodation" logic here.
-        // The payload the original app used:
-        const newAccomodation = {
-          propertyName: value.name,
-          description: value.description,
-          propertyType: value.propertyType,
-          roomType: value.roomType,
-          extraInfo: value.extraInfo,
-          images: value.images,
-          address: value.address,
-          amenities: value.amenities,
-          checkInTime: value.checkIn,
-          checkOutTime: value.checkOut,
-          maximumGuest: value.maximumGuest,
-          price: value.price,
-        };
-        console.log(newAccomodation);
-        toast.success("New Property Created Successfully");
-        navigate("/accomodation");
-      } catch (error) {
-        toast.error(error.message);
-        console.error(error.message);
-      }
-    },
+onSubmit: async ({ value }) => {
+  try {
+    console.log(value);
+
+    await dispatch(
+      createAccomodation({
+        propertyName: value.name,
+        description: value.description,
+        propertyType: value.propertyType,
+        roomType: value.roomType,
+        extraInfo: value.extraInfo,
+        images: value.images,
+        address: value.address,
+        amenities: value.amenities,
+        checkInTime: value.checkIn,
+        checkOutTime: value.checkOut,
+        maximumGuest: value.maximumGuest,
+        price: value.price,
+      })
+    );
+
+    // Fetch the latest accommodations from backend
+    await dispatch(getAllAccomodation());
+
+    toast.success("New Property Created Successfully");
+
+    // Now open My Accommodations with updated data
+    navigate("/accomodation");
+  } catch (error) {
+    toast.error(
+      error.response?.data?.message || error.message
+    );
+
+    console.error(error);
+  }
+},
   });
 
   const handleAiDescription = async (field) => {
