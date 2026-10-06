@@ -55,14 +55,15 @@ const Payment = () => {
             toDate: checkoutDate,
             guests,
             price: totalPrice,
+            numberOfnights: nights,
           },
           forceStatus: "success",
         })
       );
 
+      dispatch(paymentActions.resetPayment());
       toast.success("🎉 Payment Successful! Booking Confirmed!");
       setTimeout(() => navigate("/user/mybookings"), 1000);
-      dispatch(paymentActions.resetPayment());
     } catch {
       toast.error("Payment failed!");
     }
@@ -76,7 +77,7 @@ const Payment = () => {
     if (orderData && !showPaymentGateaway) {
       setShowPaymentGateaway(true);
     }
-  }, [orderData]);
+  }, [orderData, showPaymentGateaway]);
   if (showPaymentGateaway && orderData) {
     return (
       <div className="payment-gateway-overlay">

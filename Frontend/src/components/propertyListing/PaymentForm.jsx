@@ -46,26 +46,40 @@ const PaymentForm = ({
     },
     onSubmit: async ({ value }) => {
       const [checkinDate, checkoutDate] = value.dateRange;
-      const nights = moment(checkoutDate).diff(moment(checkinDate), "days");
       const { name, guests, phoneNumber } = value;
-      if (name && guests && phoneNumber && checkinDate && checkoutDate) {
-        await dispatch(
-          setPaymentDetails({
-            checkinDate: checkinDate,
-            checkoutDate: checkoutDate,
-            nights,
-            totalPrice: calculatedPrice,
-            propertyName,
-            address,
-            guests: Number(guests),
-            name,
-            phoneNumber,
-          })
-        );
-        navigate(`/payment/${propertyId}`);
-      } else {
-        alert("Please fill all fields correctly before proceeding.");
+      const guestCount = Number(guests);
+
+      if (!checkinDate || !checkoutDate) {
+        alert("Please select a check-in and check-out date.");
+        return;
       }
+
+      if (!name || !phoneNumber) {
+        alert("Please fill in your name and phone number.");
+        return;
+      }
+
+      if (!Number.isInteger(guestCount) || guestCount < 1 || guestCount > maximumGuest) {
+        alert(`Guests must be between 1 and ${maximumGuest}.`);
+        return;
+      }
+
+      const nights = moment(checkoutDate).diff(moment(checkinDate), "days");
+
+      await dispatch(
+        setPaymentDetails({
+          checkinDate: checkinDate,
+          checkoutDate: checkoutDate,
+          nights,
+          totalPrice: calculatedPrice,
+          propertyName,
+          address,
+          guests: guestCount,
+          name,
+          phoneNumber,
+        })
+      );
+      navigate(`/payment/${propertyId}`);
     },
   });
 
@@ -126,6 +140,8 @@ const PaymentForm = ({
                 <input
                   type="number"
                   className="no-of-guest"
+                  min={1}
+                  max={maximumGuest}
                   placeholder="Guest"
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}

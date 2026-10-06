@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "../../css/MyBookings.css";
 import ProgressSteps from "../ProgressSteps";
 import { useNavigate } from "react-router-dom";
@@ -11,21 +11,30 @@ const MyBookings = () => {
   const navigate = useNavigate();
 
   const dispatch =useDispatch();
-  const{bookings, loading} = useSelector((state)=>state.booking);
+  const { bookings, loading, error } = useSelector((state) => state.booking);
 
 
   useEffect(() => {
     //  fetch the user bookings here and set them above.
     dispatch(fetchUserBookings())
-  }, []);
-
-  console.log(bookings);
+  }, [dispatch]);
 
   const handleBookingClick = (bookingId) => {
     // TODO: fetch this booking's details here if you need to.
     dispatch(fetchBookingDetails(bookingId))
     navigate(`/user/myBookings/${bookingId}`);
   };
+
+  if (error && !loading) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "80vh" }}
+      >
+        <h3>{error}</h3>
+      </div>
+    );
+  }
 
   if (bookings.length === 0 && !loading) {
     return (

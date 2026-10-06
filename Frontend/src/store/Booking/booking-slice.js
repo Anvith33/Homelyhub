@@ -10,30 +10,43 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  bookings:[],
-  BookingDetails:{},
-  loading:false
-}
+  bookings: [],
+  bookingDetails: null,
+  loading: false,
+  error: null,
+};
 
 const bookingSlice = createSlice({
   name:"booking",
   initialState,
   reducers:{
-    setNookingRequest(state){
-      state.loading=true;
+    setBookingRequest(state) {
+      state.loading = true;
+      state.error = null;
     },
-    setBooking(state, action){
-      state.bookingsooking= action.payload;
-      state.loading=false
+    setBookings(state, action) {
+      state.bookings = action.payload;
+      state.loading = false;
     },
-    addBooking:(state,action)=>{
+    addBooking(state, action) {
       state.bookings.push(action.payload);
     },
-    setBookingDetails:(state, action)=>{
-      state.bookingDetails=action.payloadload.bookings;
-    }
-  }
-})
+    setBookingDetails(state, action) {
+      state.bookingDetails = action.payload;
+      state.loading = false;
+    },
+    setBookingError(state, action) {
+      state.error = action.payload;
+      state.loading = false;
+    },
+  },
+});
 
-export const {setBookings, addBooking, setBookingDetails} = bookingSlice.actions;
+export const {
+  setBookingRequest,
+  setBookings,
+  addBooking,
+  setBookingDetails,
+  setBookingError,
+} = bookingSlice.actions;
 export default bookingSlice;
