@@ -23,7 +23,7 @@ const MyAccomodation = ({ accomodation }) => {
                 <span className="material-symbols-outlined icon">
                   calendar_month
                 </span>
-                Check In Time: {accomodation.chekInTime}
+                Check In Time: {accomodation.checkInTime}
               </span>
               <span className="material-symbols-outlined icon">
                 arrow_forward
@@ -32,7 +32,7 @@ const MyAccomodation = ({ accomodation }) => {
                 <span className="material-symbols-outlined icon">
                   calendar_month
                 </span>
-                Check Out Time: {accomodation.chekOutTime}
+                Check Out Time: {accomodation.checkOutTime}
               </span>
             </div>
             <p className="myaccomodation-city">
